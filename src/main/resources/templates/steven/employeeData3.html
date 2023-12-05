@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head >
+
+  <base href="./">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+  <meta name="description" content="CoreUI - Open Source Bootstrap Admin Template">
+  <meta name="author" content="Łukasz Holeczek">
+  <meta name="keyword" content="Bootstrap,Admin,Template,Open,Source,jQuery,CSS,HTML,RWD,Dashboard">
+  <title>CoreUI Free Bootstrap Admin Template</title>
+
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+
+  <!-- Main styles for this application-->
+  <link href="css/style.css" rel="stylesheet">
+
+
+  <!-- Vue 3 和 Axios -->
+  <script src="js/vue.global.js"></script>
+
+
+  <!-- Thymeleaf 整合的 JavaScript 資源 -->
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery-3.7.1.min.js"></script>
+
+  <style>
+    .employee-container {
+      position: relative;
+    }
+
+    .employee-photo {
+      position: absolute;
+      top: 10px;    /* 根據需要調整上側邊距 */
+      right: 10px;  /* 根據需要調整右側邊距 */
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;  /* 可選，用於使圖片呈現圓形 */
+    }
+  </style>
+
+</head>
+
+<body>
+
+<!--  sidebar-->
+<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+  <div class="sidebar-brand d-none d-md-flex">
+    <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+      <use xlink:href="assets/brand/coreui.svg#full"></use>
+    </svg>
+    <svg class="sidebar-brand-narrow" width="46" height="46" alt="CoreUI Logo">
+      <use xlink:href="assets/brand/coreui.svg#signet"></use>
+    </svg>
+  </div>
+  <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+    <li class="nav-item"><a class="nav-link" href="index.html">
+      <svg class="nav-icon">
+        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+      </svg> 魔幻空間<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
+
+
+
+    <li class="nav-title">員工管理系統</li>
+    <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <svg class="nav-icon">
+        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
+      </svg> 員工考勤</a>
+      <ul class="nav-group-items">
+        <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> 員工打卡</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> 員工請假申請</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> 員工請假審核</a></li>
+
+      </ul>
+    </li>
+    <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <svg class="nav-icon">
+        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
+      </svg> 員工資料</a>
+      <ul class="nav-group-items">
+        <li class="nav-item"><a class="nav-link" href="buttons/buttons.html"><span class="nav-icon"></span> 個人資料</a></li>
+        <li class="nav-item"><a class="nav-link" href="buttons/button-group.html"><span class="nav-icon"></span> 員工清單</a></li>
+        <li class="nav-item"><a class="nav-link" href="buttons/dropdowns.html"><span class="nav-icon"></span> Dropdowns</a></li>
+      </ul>
+    </li>
+
+
+    <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <svg class="nav-icon">
+        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
+      </svg> 員工排班</a>
+      <ul class="nav-group-items">
+        <li class="nav-item"><a class="nav-link" href="buttons/buttons.html"><span class="nav-icon"></span> 排班表</a></li>
+        <li class="nav-item"><a class="nav-link" href="buttons/button-group.html"><span class="nav-icon"></span> 排班管理</a></li>
+        <li class="nav-item"><a class="nav-link" href="buttons/dropdowns.html"><span class="nav-icon"></span> 個人班表</a></li>
+      </ul>
+    </li>
+
+
+
+
+
+
+    <li class="nav-title">Setting</li>
+    <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+      <svg class="nav-icon">
+        <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-star"></use>
+      </svg> Pages</a>
+      <ul class="nav-group-items">
+        <li class="nav-item"><a class="nav-link" href="login.html" target="_top">
+          <svg class="nav-icon">
+            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+          </svg> Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="register.html" target="_top">
+          <svg class="nav-icon">
+            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+          </svg> Register</a></li>
+
+      </ul>
+    </li>
+
+  </ul>
+
+</div>
+
+
+
+
+<!--header-->
+
+<div class="wrapper d-flex flex-column min-vh-100 bg-light">
+  <header class="header header-sticky mb-4">
+    <div class="container-fluid">
+      <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+        <svg class="icon icon-lg">
+          <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+        </svg>
+      </button><a class="header-brand d-md-none" href="#">
+      <svg width="118" height="46" alt="CoreUI Logo">
+        <use xlink:href="assets/brand/coreui.svg#full"></use>
+      </svg></a>
+      <ul class="header-nav d-none d-md-flex">
+        <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+      </ul>
+      <ul class="header-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#">
+          <svg class="icon icon-lg">
+            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+          </svg></a></li>
+
+      </ul>
+      <ul class="header-nav ms-3">
+        <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"></div>
+        </a>
+          <div class="dropdown-menu dropdown-menu-end pt-0">
+            <div class="dropdown-header bg-light py-2">
+              <div class="fw-semibold">帳號管理</div>
+            </div><a class="dropdown-item" href="#">
+
+            <svg class="icon me-2">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+            </svg> Messages<span class="badge badge-sm bg-success ms-2">42</span></a><a class="dropdown-item" href="#">
+            <svg class="icon me-2">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-task"></use>
+            </svg> Tasks<span class="badge badge-sm bg-danger ms-2">42</span></a><a class="dropdown-item" href="#">
+
+
+            <svg class="icon me-2">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
+            </svg> Settings</a><a class="dropdown-item" href="#">
+
+            <svg class="icon me-2">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-file"></use>
+            </svg> Projects<span class="badge badge-sm bg-primary ms-2">42</span></a>
+            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
+
+            <svg class="icon me-2">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+            </svg> Logout</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+
+
+
+    <!--       headbar-->
+
+    <div class="header-divider"></div>
+    <div class="container-fluid">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb my-0 ms-2">
+          <li class="breadcrumb-item">
+            <!-- if breadcrumb is single--><span>Home</span>
+          </li>
+          <li class="breadcrumb-item active"><span>員工管理系統</span></li>
+        </ol>
+      </nav>
+    </div>
+  </header>
+
+
+
+  <!--container-->
+
+
+  <div class="body flex-grow-1 px-3">
+    <div class="container-lg">
+      <div class="row">
+
+      </div>
+
+    </div>
+
+
+
+
+
+
+
+
+    <div id="app" class="container mt-3">
+
+
+      <div v-if="selectedEmployee" class="container mt-4 border p-3 employee-container" style="max-width: 400px;">
+        <!-- 照片元素 -->
+        <img v-if="selectedEmployee.empPhoto" :src="'data:image/jpeg;base64,' + selectedEmployee.empPhoto"
+             alt="員工頭像" class="employee-photo" />
+        <h3>員工詳細信息</h3>
+        <form @submit.prevent="updateEmployeeDetails" class="row g-1 needs-validation">
+          <div class="row mb-3">
+            <div class="col-6">
+              <label for="empName" class="form-label">姓名：</label>
+              <input id="empName" class="form-control" v-model="selectedEmployee.empName" >
+
+            </div>
+            <div class="mb-3 w-30">
+              <label for="gender" class="form-label">性別：</label>
+              <input id="gender" class="form-control" v-model="selectedEmployee.gender" disabled>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email：</label>
+            <input id="email" type="email" class="form-control" v-model="selectedEmployee.email">
+          </div>
+
+          <div class="mb-3">
+            <label for="department" class="form-label">部門：</label>
+            <select id="department" class="form-control" v-model="selectedEmployee.departmentId">
+              <option value="1">中央管理部門</option>
+              <option value="2">活動管理部門</option>
+              <option value="3">婚禮管理部門</option>
+              <option value="4">交友管理部門</option>
+              <option value="5">活動管理部門</option>
+            </select>
+
+          </div>
+
+          <div class="mb-3">
+            <label for="position" class="form-label">職位：</label>
+            <select id="position" class="form-control" v-model="selectedEmployee.positionId">
+              <option value="1">總經理</option>
+              <option value="2">部門經理</option>
+              <option value="3">部門主管</option>
+              <option value="4">一般員工</option>
+
+            </select>
+
+          </div>
+          <div class="mb-3">
+            <label for="birthdate" class="form-label">生日：</label>
+            <input id="birthdate" type="date" class="form-control"   v-model="selectedEmployee.birthDate"  >
+          </div>
+          <div class="row mb-3">
+            <div class="col">
+              <label for="phone" class="form-label">電話：</label>
+              <input id="phone"  class="form-control" v-model="selectedEmployee.phone">
+            </div>
+            <div class="col">
+              <label for="address" class="form-label">地址：</label>
+              <input id="address" class="form-control" v-model="selectedEmployee.address">
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="workType" class="form-label">班別：</label>
+            <select id="workType" class="form-control" v-model="selectedEmployee.workTypeId">
+              <option value="1">Day</option>
+              <option value="2">Night</option>
+              </select>
+
+          </div>
+
+          <div class="mb-3">
+            <label for="preferType" class="form-label">班別喜好：</label>
+            <input id="preferType"  class="form-control" v-model="selectedEmployee.preferType">
+          </div>
+          <div class="mb-3">
+            <label for="salary" class="form-label">薪資：</label>
+            <input id="salary"  class="form-control" v-model="selectedEmployee.salary">
+          </div>
+
+          <div class="mb-3">
+            <label for="role" class="form-label">權限：</label>
+            <select id="role" class="form-control" v-model="selectedEmployee.role">
+              <option value="1">最高級別</option>
+              <option value="2">經理級別</option>
+              <option value="3">主管級別</option>
+              <option value="4">員工級別</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">保存更改</button>
+        </form>
+      </div>
+      <br>
+
+
+
+
+
+
+      <div>
+      <h2>員工列表</h2>
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>ID</th>
+          <th>名字</th>
+          <th>部門</th>
+          <th>班別</th>
+          <th>職位</th>
+          <th>詳細</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr v-for="employee in employees" :key="employee.empId">
+          <td>{{ employee.empId }}</td>
+          <td>{{ employee.empName }}</td>
+          <td>{{ employee.departmentName }}</td>
+          <td>{{ employee.workType }}</td>
+          <td>{{ employee.positionName }}</td>
+          <td><button class="btn btn-primary" @click="fetchEmployeeDetails(employee.empId)">查看</button></td>
+        </tr>
+        </tbody>
+      </table>
+
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" :class="{ disabled: currentPage === 1 }">
+              <button class="page-link" @click="changePage(currentPage - 1)">上一頁</button>
+            </li>
+            <li class="page-item" :class="{ active: page === currentPage }" v-for="page in totalPages" :key="page">
+              <button class="page-link" @click="changePage(page)">{{ page }}</button>
+            </li>
+            <li class="page-item" :class="{ disabled: currentPage === totalPages }">
+              <button class="page-link" @click="changePage(currentPage + 1)">下一頁</button>
+            </li>
+          </ul>
+        </nav>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+<script src="vendors/simplebar/js/simplebar.min.js"></script>
+
+<script src="vendors/@coreui/utils/js/coreui-utils.js"></script>
+<script src="js/main.js"></script>
+  <script>
+    const { createApp, ref, onMounted } = Vue;
+
+    createApp({
+      setup() {
+        const employees = ref([]);
+        const selectedEmployee = ref(null);
+        const currentPage = ref(1);
+        const totalPages = ref(5);
+
+
+        const changePage = (page) => {
+          console.log("當前頁碼：", page);
+          if (page >= 1 && page <= totalPages.value) {
+            currentPage.value = page;
+            console.log("更新後的頁碼：", currentPage.value);
+            fetchEmployees();
+          }
+        };
+
+        const fetchEmployees = async (pageNumber = 1) => {
+          try {
+            const response = await axios.get(`http://localhost:8087/ee172/api/employee/empList2`, {
+              params: { p: currentPage.value }
+            });
+            employees.value = response.data.content; //
+            totalPages.value = response.data.totalPages; //
+            currentPage.value = response.data.number + 1; //
+          } catch (error) {
+            console.error('Error fetching employees:', error);
+          }
+        };
+
+        const fetchEmployeeDetails = async (empId) => {
+          try {
+            const response = await axios.get(`http://localhost:8087/ee172/api/employee/${empId}`);
+            selectedEmployee.value = response.data;
+          } catch (error) {
+            console.error('Error fetching employee details:', error);
+          }
+        };
+
+        const updateEmployeeDetails = async () => {
+          if (selectedEmployee.value && selectedEmployee.value.empId) {
+            try {
+              await axios.put(`http://localhost:8087/ee172/api/employee/${selectedEmployee.value.empId}`, selectedEmployee.value);
+              alert('員工信息已更新');
+            } catch (error) {
+              console.error('Error updating employee details:', error);
+            }
+          }
+        };
+
+        onMounted(fetchEmployees);
+
+        return { employees,
+          selectedEmployee,
+          fetchEmployeeDetails,
+          updateEmployeeDetails,
+          currentPage,
+          totalPages,
+          changePage};
+      }
+    }).mount('#app');
+
+  </script>
+
+
+</body>
+</html>
