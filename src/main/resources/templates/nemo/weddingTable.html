@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wedding Information Questionnaire</title>
+<script src="../js/jquery-3.7.1.min.js"></script>
+<style>
+body {
+	font-family: 'Arial', sans-serif;
+	background-color: #f4f4f4;
+	margin: 0;
+	padding: 0;
+}
+
+.container {
+	width: 100%;
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group {
+	margin-bottom: 20px;
+	width: 80%;
+}
+
+label {
+	display: block;
+	margin-bottom: 5px;
+	color: #333;
+}
+
+input[type="text"] {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	/* Added to maintain the width */
+}
+
+button:hover {
+	background-color: #3277d1;
+}
+
+.table11_7 table {
+	width: 100%;
+	margin: 15px 0;
+	border: 0;
+}
+
+.table11_7 th {
+	background-color: #00A5FF;
+	color: #FFFFFF
+}
+
+.table11_7, .table11_7 th, .table11_7 td {
+	font-size: 0.95em;
+	text-align: center;
+	padding: 4px;
+	border-collapse: collapse;
+}
+
+.table11_7 th, .table11_7 td {
+	border: 1px solid #2087fe;
+	border-width: 1px 0 1px 0;
+	border: 2px inset #ffffff;
+}
+
+.table11_7 tr {
+	border: 1px solid #ffffff;
+}
+
+.table11_7 tr:nth-child(odd) {
+	background-color: #aae1fe;
+}
+
+.table11_7 tr:nth-child(even) {
+	background-color: #ffffff;
+}
+
+.table12 {
+	border-collapse: collapse;
+	table-layout: fixed;
+	border-radius: 5px;
+	overflow: hidden;
+	margin: 10px auto;
+	border: 2px solid #70aefb;
+	background-color: #aae1fe;
+	width: 80%;
+}
+
+.table12 td, th {
+	border: 1px solid #70aefb;
+	text-align: center;
+}
+
+.table12 td select {
+	width: 100%;
+}
+
+table.imagetable {
+	font-family: verdana, arial, sans-serif;
+	font-size: 16px;
+	color: #333333;
+	border-width: 1px;
+	border-color: #999999;
+	border-collapse: collapse;
+	width: 100%;
+}
+
+table.imagetable th {
+	background: #b5cfd2 url('../cell-blue.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+
+table.imagetable td {
+	background: #dcddc0 url('../cell-gray.jpg');
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #999999;
+}
+
+table.imagetable td.nb {
+	background: none;
+}
+
+table.imagetable td select {
+	width: 100%;
+}
+
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-color: #fff;
+	border-radius: 4px;
+	border: 1px solid #dcdcdc;
+	padding: 8px;
+	font-size: 16px;
+	color: #333;
+}
+/* 示例 2: 自定义 select 箭头图标 */
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background-image: url('arrow-down.png');
+	background-repeat: no-repeat;
+	background-position: right center;
+	background-size: 16px;
+	padding-right: 24px;
+	border-radius: 4px;
+	border: 1px solid #dcdcdc;
+	padding: 8px;
+	font-size: 16px;
+	color: #333;
+}
+/* 示例 3: 渐变色 select 样式 */
+select {
+	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	background: linear-gradient(to bottom, #f2f2f2, #ffffff);
+	border-radius: 4px;
+	border: 1px solid #dcdcdc;
+	padding: 8px;
+	font-size: 16px;
+	color: #333;
+}
+/* 示例 4: 悬停时展开 select 样式 */
+select:hover {
+	cursor: pointer;
+}
+
+select option:hover {
+	background: #f9f9f9;
+}
+
+select:focus {
+	outline: none;
+	border-color: #5cb85c;
+	box-shadow: 0 0 2px #5cb85c;
+}
+
+li {
+	list-style-type: demical;
+}
+</style>
+</head>
+
+<body>
+	<div class="container">
+		<h2>後台分桌系統</h2>
+
+		<div>
+			<div class="form-group">
+				<input type="hidden" id="hd" th:value="${weddingId}" /> <label>選擇縂桌數:</label>
+				<div style="height: 30px;">
+					<input th:value="${tableCount}" style="height: 30px; float: left;"
+						id="tableCount" type="number" required />
+					<button id="generatebtn" onclick="click1()"
+						style="height: 34.2px; width: 100px; float: left; margin-left: 10px; font-size: 18px">生成</button>
+				</div>
+			</div>
+			<div>
+				<table id="tab" class="imagetable">
+					<tr>
+						<th>桌號</th>
+						<th>名稱</th>
+					</tr>
+					<tbody class='tb'>
+						<tr class='rows' th:each="i:${list}">
+							<td th:text="${i.tableno}"></td>
+							<td th:text="${i.tablename}"></td>
+						</tr>
+					</tbody>
+				</table>
+				<button id="savebtn" style="display: none" onclick="click2()">保存</button>
+			</div>
+		</div>
+		<h2>來賓分桌</h2>
+		<div style="height: 300px; overflow-y: scroll">
+			<table class="imagetable">
+				<tr>
+					<th>賓客姓名</th>
+					<th>關係</th>
+					<th>分桌</th>
+				</tr>
+				<tr th:each="guest:${guests}">
+					<td th:text="${guest.guestName}"></td>
+					<td th:text="${guest.relationship}"></td>
+					<td><div class="option">
+							<select th:pid="${guest.guestId}"
+								onchange="selectChange(this.getAttribute('pid'),this.options[this.options.selectedIndex].value)">
+								<option></option>
+								<option th:each="dict:${list}" th:text="${dict.tablename}"
+									th:value="${dict.tableno}"
+									th:selected="${dict.tableno} == ${guest.tableNumber}"></option>
+							</select>
+						</div></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<h2>分桌總覽</h2>
+			<table class="imagetable">
+				<tr>
+					<th th:each="l:${list}"><span th:text="${l.tablename}"></span></th>
+				</tr>
+				<tr>
+					<td class="nb" th:each="i:${list}">
+						<ul>
+							<li th:each="guest:${guests}"
+								th:if="${i.tableno} == ${guest.tableNumber}"
+								th:text="${guest.guestName}"></li>
+						</ul>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+
+<script>
+	//生成桌
+	function click1() {
+		$('#savebtn').css('display', 'block');
+		$('#generatebtn').css('display', 'none');
+		var input = parseInt($('#tableCount').val());
+		var tab = $('.tb');
+		var length = tab.find(".rows").length;
+
+		//
+		if (input >= length) {
+			tab.find(".rows").each(function() {
+				var td = $(this).find('td:last');
+				td.html('<input value="' + td.html() + '"></input>');
+			});
+
+			for (var i = 0; i < input - length; i++) {
+				var row1 = $("<tr class='rows'></tr>");
+				var cell1 = $("<td>").text(length + i + 1);
+				var cell2 = $("<td>").html("<input />");
+				row1.append(cell1);
+				row1.append(cell2);
+				tab.append(row1);
+			}
+		} else {
+			tab.find(".rows").each(function(i) {
+				if (i < input) {
+					var td = $(this).find('td:last');
+					td.html('<input value="' + td.html() + '"></input>');
+				} else {
+					$(this).remove();
+				}
+			});
+		}
+
+	}
+
+	//保存桌
+	function click2() {
+		$('#savebtn').css('display', 'none');
+		$('#generatebtn').css('display', 'block');
+		var weddingId = $('#hd').val();
+		var tableClass = [];
+		$('.rows').each(
+				function() {
+					tableClass.push(weddingId + ","
+							+ $(this).find('td:first').html() + ","
+							+ $(this).find('td:last').find('input').val());
+				});
+
+		$.ajax({
+			url : './save',
+			dataType : 'json',
+			contentType : 'application/json',
+			type : 'POST',
+			data : JSON.stringify(tableClass),
+			success : function(req) {
+				location.reload();
+			}
+
+		})
+	}
+
+	function selectChange(guestid, groupno) {
+		var guest = {
+			'guestId' : guestid,
+			'tableNumber' : groupno
+		};
+
+		$.ajax({
+			url : './saveGroup',
+			dataType : 'json',
+			contentType : 'application/json',
+			type : 'POST',
+			data : JSON.stringify(guest),
+			success : function(req) {
+				location.reload();
+			},
+			error : function() {
+				alert('error!');
+			}
+
+		})
+	}
+</script>
+</html>

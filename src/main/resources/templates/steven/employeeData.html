@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <th:block th:replace="~{steven/layout/header :: head}"></th:block>
+
+
+</head>
+  <body>
+
+                                               <!--  sidebar-->
+    <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+      <div class="sidebar-brand d-none d-md-flex">
+        <svg class="sidebar-brand-full" width="118" height="46" alt="CoreUI Logo">
+          <use xlink:href="assets/brand/coreui.svg#full"></use>
+        </svg>
+        <svg class="sidebar-brand-narrow" width="46" height="46" alt="CoreUI Logo">
+          <use xlink:href="assets/brand/coreui.svg#signet"></use>
+        </svg>
+      </div>
+      <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+        <li class="nav-item"><a class="nav-link" href="index.html">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-speedometer"></use>
+            </svg> 魔幻空間<span class="badge badge-sm bg-info ms-auto">NEW</span></a></li>
+
+
+
+        <li class="nav-title">員工管理系統</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-puzzle"></use>
+            </svg> 員工考勤</a>
+          <ul class="nav-group-items">
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> 員工打卡</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> 員工請假申請</a></li>
+            <li class="nav-item"><a class="nav-link" href="#"><span class="nav-icon"></span> 員工請假審核</a></li>
+
+          </ul>
+        </li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
+            </svg> 員工資料</a>
+          <ul class="nav-group-items">
+            <li class="nav-item"><a class="nav-link" href="buttons/buttons.html"><span class="nav-icon"></span> 個人資料</a></li>
+            <li class="nav-item"><a class="nav-link" href="buttons/button-group.html"><span class="nav-icon"></span> 員工清單</a></li>
+            <li class="nav-item"><a class="nav-link" href="buttons/dropdowns.html"><span class="nav-icon"></span> Dropdowns</a></li>
+          </ul>
+        </li>
+
+
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+          <svg class="nav-icon">
+            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-cursor"></use>
+          </svg> 員工排班</a>
+          <ul class="nav-group-items">
+            <li class="nav-item"><a class="nav-link" href="buttons/buttons.html"><span class="nav-icon"></span> 排班表</a></li>
+            <li class="nav-item"><a class="nav-link" href="buttons/button-group.html"><span class="nav-icon"></span> 排班管理</a></li>
+            <li class="nav-item"><a class="nav-link" href="buttons/dropdowns.html"><span class="nav-icon"></span> 個人班表</a></li>
+          </ul>
+        </li>
+
+
+
+
+
+
+        <li class="nav-title">Setting</li>
+        <li class="nav-group"><a class="nav-link nav-group-toggle" href="#">
+            <svg class="nav-icon">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-star"></use>
+            </svg> Pages</a>
+          <ul class="nav-group-items">
+            <li class="nav-item"><a class="nav-link" href="login.html" target="_top">
+                <svg class="nav-icon">
+                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                </svg> Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="register.html" target="_top">
+                <svg class="nav-icon">
+                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                </svg> Register</a></li>
+
+          </ul>
+        </li>
+
+      </ul>
+
+    </div>
+
+
+
+
+                                                             <!--header-->
+
+    <div class="wrapper d-flex flex-column min-vh-100 bg-light">
+      <header class="header header-sticky mb-4">
+        <div class="container-fluid">
+          <button class="header-toggler px-md-0 me-md-3" type="button" onclick="coreui.Sidebar.getInstance(document.querySelector('#sidebar')).toggle()">
+            <svg class="icon icon-lg">
+              <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-menu"></use>
+            </svg>
+          </button><a class="header-brand d-md-none" href="#">
+            <svg width="118" height="46" alt="CoreUI Logo">
+              <use xlink:href="assets/brand/coreui.svg#full"></use>
+            </svg></a>
+          <ul class="header-nav d-none d-md-flex">
+            <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Settings</a></li>
+          </ul>
+          <ul class="header-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="#">
+                <svg class="icon icon-lg">
+                  <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-bell"></use>
+                </svg></a></li>
+
+          </ul>
+          <ul class="header-nav ms-3">
+            <li class="nav-item dropdown"><a class="nav-link py-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="avatar avatar-md"><img class="avatar-img" src="#" alt="user@email.com"></div>
+              </a>
+              <div class="dropdown-menu dropdown-menu-end pt-0">
+                <div class="dropdown-header bg-light py-2">
+                  <div class="fw-semibold">帳號管理</div>
+                </div><a class="dropdown-item" href="#">
+
+                  <svg class="icon me-2">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                  </svg> Messages<span class="badge badge-sm bg-success ms-2">42</span></a><a class="dropdown-item" href="#">
+                  <svg class="icon me-2">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-task"></use>
+                  </svg> Tasks<span class="badge badge-sm bg-danger ms-2">42</span></a><a class="dropdown-item" href="#">
+
+
+                  <svg class="icon me-2">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-settings"></use>
+                  </svg> Settings</a><a class="dropdown-item" href="#">
+
+                  <svg class="icon me-2">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-file"></use>
+                  </svg> Projects<span class="badge badge-sm bg-primary ms-2">42</span></a>
+                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">
+
+                  <svg class="icon me-2">
+                    <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-account-logout"></use>
+                  </svg> Logout</a>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+
+
+
+                                      <!--       headbar-->
+
+        <div class="header-divider"></div>
+        <div class="container-fluid">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb my-0 ms-2">
+              <li class="breadcrumb-item">
+                <!-- if breadcrumb is single--><span>Home</span>
+              </li>
+              <li class="breadcrumb-item active"><span>員工管理系統</span></li>
+            </ol>
+          </nav>
+        </div>
+      </header>
+
+
+
+                                   <!--container-->
+
+
+      <div class="body flex-grow-1 px-3">
+        <div class="container-lg">
+          <div class="row">
+
+            </div>
+
+          </div>
+
+
+
+        <div v-if="selectedEmployee" class="mt-4">
+          <h3>員工詳細資料</h3>
+          <table class="table table-bordered">
+            <tr>
+              <th>名字</th>
+              <td><input type="text" v-model="selectedEmployee.empName"></td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td><input type="email" v-model="selectedEmployee.email"></td>
+            </tr>
+            <!-- 省略其他屬性 -->
+          </table>
+          <button @click="updateEmployeeDetails">更新資料</button>
+        </div>
+
+
+
+
+
+
+
+
+
+
+      <div class="container mt-4" id="app">
+
+
+        <div id="employee-details" v-if="selectedEmployee">
+          <h3>員工詳細資料</h3>
+          <table class="table table-striped">
+            <tr>
+              <th>ID</th>
+              <td>{{ selectedEmployee.empId }}</td>
+            </tr>
+            <tr>
+              <th>姓名</th>
+              <td>{{ selectedEmployee.empName }}</td>
+            </tr>
+            <tr>
+              <th>Email</th>
+              <td>{{ selectedEmployee.email }}</td>
+            </tr>
+            <!-- 其他員工資料 -->
+          </table>
+          <button @click="updateEmployeeDetails">更新資料</button>
+        </div>
+
+
+
+
+            <div class="container mt-3">
+              <h2>員工列表</h2>
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>名字</th>
+                  <th>部門</th>
+                  <th>班別</th>
+                  <th>職位</th>
+                  <th>詳細</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:block th:each="employee : ${page}">
+                  <td th:text="${employee.empId}"></td>
+                  <td th:text="${employee.empName}"></td>
+                  <td th:text="${employee.department.getDepName()}"></td>
+                  <td th:text="${employee.workTypes.getWhType()}"></td>
+                  <td th:text="${employee.position.getEmpPos()}"></td>
+                  <td><button @click="fetchEmployeeDetails(employee.empId)">查看</button></td>
+                  <!-- 其他數據欄位 -->
+                </tr>
+                </tbody>
+              </table>
+            </div>
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </div>
+
+
+ <script>
+   Vue.createApp({
+     data() {
+       return {
+         selectedEmployee: null
+       };
+     },
+     methods: {
+       fetchEmployeeDetails(empId) {
+         axios.get(`/api/employees/${empId}`)
+                 .then(response => {
+                   this.selectedEmployee = response.data;
+                 })
+                 .catch(error => console.error('Error fetching employee details:', error));
+       },
+       updateEmployeeDetails() {
+         if (this.selectedEmployee && this.selectedEmployee.empId) {
+           axios.put(`/api/employees/${this.selectedEmployee.empId}`, this.selectedEmployee)
+                   .then(response => {
+                     alert("員工資料已更新");
+                   })
+                   .catch(error => console.error('Error updating employee details:', error));
+         }
+       }
+     }
+   }).mount('#app');
+ </script>
+
+  </body>
+</html>

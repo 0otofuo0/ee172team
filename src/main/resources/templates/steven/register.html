@@ -1,0 +1,186 @@
+<!DOCTYPE html><!--
+* CoreUI - Free Bootstrap Admin Template
+* @version v4.2.2
+* @link https://coreui.io/product/free-bootstrap-admin-template/
+* Copyright (c) 2023 creativeLabs Łukasz Holeczek
+* Licensed under MIT (https://github.com/coreui/coreui-free-bootstrap-admin-template/blob/main/LICENSE)
+-->
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+  <head>
+    <th:block th:replace="~{steven/layout/header :: head}"></th:block>
+    <style>
+      .error-message {
+      color: red;
+      margin-top: 5px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="bg-light min-vh-100 d-flex flex-row align-items-center">
+      <div class="container" >
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="card mb-4 mx-4">
+              <div class="card-body p-4" id="app">
+                <h1>Register</h1>
+                <p class="text-medium-emphasis">Create your account</p>
+                <div class="input-group mb-3"><span class="input-group-text">
+                    <svg class="icon">
+                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-user"></use>
+
+                    </svg></span>
+                  <input class="form-control" type="text" placeholder="UserAccount" v-model="userAccount">
+                  <br><p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
+                </div>
+                <div class="input-group mb-3"><span class="input-group-text" >
+                    <svg class="icon">
+                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-envelope-open"></use>
+                    </svg></span>
+                  <input class="form-control" type="text" placeholder="Email" v-model="email">
+                </div>
+                <div class="input-group mb-3"><span class="input-group-text">
+                    <svg class="icon">
+                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                    </svg></span>
+                  <input class="form-control" type="password" placeholder="Password" v-model="password">
+                  <br> <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
+                </div>
+                <div class="input-group mb-4"><span class="input-group-text">
+                    <svg class="icon">
+                      <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-lock-locked"></use>
+                    </svg></span>
+                  <input class="form-control" type="password" placeholder="Repeat password" v-model="passwordRepeat">
+                  <p class="error-message" v-if="passwordMismatch.value">Passwords do not match</p>
+                </div>
+                <div class="input-group mb-4">
+                  <input class="form-control" type="text" placeholder="Username" v-model="username">
+                  <br> <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
+                </div>
+                <div class="input-group mb-4">
+                  <input class="form-control" type="text" placeholder="Address" v-model="address">
+                  <br> <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
+                </div>
+                <div class="input-group mb-4">
+                  <input class="form-control" type="text" placeholder="Phone" v-model="phone">
+                  <br> <p class="error-message" v-if="errorMessage">{{ errorMessage }}</p>
+                </div>
+                <div class="input-group mb-4">
+                  <input class="form-control" type="date" placeholder="Birthdate" v-model="birthdate">
+                </div>
+                <div class="input-group mb-4">
+                  <input type="radio" id="male" value="男" v-model="gender">
+                  <label for="male">Male</label>
+                  <input type="radio" id="female" value="女" v-model="gender">
+                  <label for="female">Female</label>
+                  <input type="radio" id="other" value="其他" v-model="gender">
+                  <label for="other">Other</label>
+                </div>
+                <div class="input-group mb-4">
+                  <input type="radio" id="Day" value="Day" v-model="preferType">
+                  <label for="Day">Day</label>
+                  <input type="radio" id="Night" value="Night" v-model="preferType">
+                  <label for="Night">Night</label>
+
+                </div>
+                <div class="input-group mb-4">
+                  <input class="form-control" type="file" placeholder="Picture" @change="fileChange">
+                </div>
+                <button class="btn btn-block btn-success" type="button" @click="createAccount">Create Account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- CoreUI and necessary plugins-->
+
+    <script>
+      const { createApp, ref, computed } = Vue;
+
+      const app = {
+        setup() {
+          const userAccount = ref('');
+          const username = ref('');
+          const email = ref('');
+          const password = ref('');
+          const passwordRepeat = ref('');
+          const passwordMismatch = computed(() => password.value !== passwordRepeat.value);
+          const address=ref('');
+          const birthdate = ref('');
+          const gender = ref('');
+          const phone = ref('');
+          const preferType = ref('');
+          const empPhoto = ref('');
+          const errorMessage = ref('');
+
+          const isFormValid = computed(() => {
+            return username.value && email.value && password.value &&
+                    passwordRepeat.value && address.value && birthdate.value &&
+                    gender.value && phone.value && preferType.value;
+          });
+
+
+          const fileChange = (e) => {
+            let file = e.target.files[0];
+            let readFile = new FileReader();
+            readFile.readAsDataURL(file);
+            readFile.onload = (e) => {
+              // 從 FileReader 獲得完整的 Base64 字符串
+              let fullBase64String = e.target.result;
+
+              // 提取純 Base64 編碼部分
+              // 這假設 Base64 字符串以 "data:image/jpeg;base64," 或類似的格式開頭
+              let base64Data = fullBase64String.split(',')[1];
+
+
+              empPhoto.value = base64Data;
+            };
+          };
+
+          const createAccount = () => {
+
+            if (passwordMismatch.value) {
+              alert("密碼不吻合");
+
+              return;
+            }
+            if (!isFormValid.value) {
+              errorMessage.value = "請填寫所有必填欄位。";
+              return;
+            }
+
+            const accountData = {
+              username: username.value,
+              userAccount:userAccount.value,
+              email: email.value,
+              password: password.value,
+              birthdate: birthdate.value,
+              address: address.value,
+              gender: gender.value,
+              phone: phone.value,
+              preferType: preferType.value,
+              empPhoto: empPhoto.value
+            };
+
+            axios.post('http://localhost:8087/ee172/api/employee/register', accountData)
+                    .then(response => {
+                      console.log('Account created:', response.data);
+                    })
+                    .catch(error => {
+                      if (error.response && error.response.data) {
+                        errorMessage.value = error.response.data.message; // 直接使用 errorMessage ref
+                      }
+                      console.error('Creation error:', error);
+                    });
+          };
+
+          return { userAccount,username, email, password, passwordRepeat, passwordMismatch, birthdate, gender, phone,address,
+                  preferType, empPhoto,errorMessage,isFormValid ,fileChange, createAccount };
+        }
+      };
+
+      Vue.createApp(app).mount('#app');
+    </script>
+
+  </body>
+</html>
